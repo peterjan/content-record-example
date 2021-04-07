@@ -26,12 +26,14 @@ export default class ExampleSkapp {
     await this.mySky.loadDacs(this.crDAC)
 
     // check login
-    try {
-      await this.mySky.checkLogin();
-    } catch (error) {
-      // should switch UI
-      console.log('login failed', error)
-    }
+    const successfulLogin = await this.mySky.checkLogin();
+    console.log('login succeeded', successfulLogin)
+  }
+
+  public async login(): Promise<void> {
+    console.log('try login...')
+    const successfulLogin = await this.mySky.requestLoginAccess()
+    console.log('login succeeded', successfulLogin)
   }
 
   public async create(): Promise<void> {
@@ -85,5 +87,5 @@ let skapp: ExampleSkapp;
     
   // bind functions
   document.getElementById("btnCreate")!.onclick = skapp.create.bind(skapp);
-  // document.getElementById("btnLogin")!.onclick = skapp.login.bind(skapp);
+  document.getElementById("btnLogin")!.onclick = skapp.login.bind(skapp);
 })();
